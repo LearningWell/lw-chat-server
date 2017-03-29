@@ -17,6 +17,8 @@ app.get('/', function(req,res) {
   res.send('Yes, this is chat server?');
 });
 
+console.log(process.env.PORT);
+
 httpsServer.listen(process.env.PORT || 8443);
 
 const wss = new WebSocketServer({

@@ -2,9 +2,9 @@
   "name": "lw-chat-server",
   "version": "1.0.0",
   "description": "Minimal chat server to use in Elm programming session at LearningWell",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/bjorse/lw-chat-server/issues"
   },
-  "homepage": "https://github.com/bjorse/lw-chat-server#readme"
+  "homepage": "https://github.com/bjorse/lw-chat-server#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "ws": "^2.2.2"
+  }
 }

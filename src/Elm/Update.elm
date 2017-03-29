@@ -26,8 +26,8 @@ update msg model =
             { model | chatMessage = chatMessage } ! []
 
         ChatMessageKeyDown key ->
-            case ( key, (String.isEmpty << String.trim) model.chatMessage ) of
-                ( 13, False ) ->
+            case key of
+                13 ->
                     sendChatMessage model
 
                 _ ->
@@ -39,11 +39,14 @@ update msg model =
 
 sendChatMessage : Model -> ( Model, Cmd Msg )
 sendChatMessage model =
-    let
-        encodedMessage =
-            encodeChatMessage model.username model.chatMessage |> Encode.encode 0
-    in
-        ( { model | chatMessage = "" }, WebSocket.send model.url encodedMessage )
+    if ((not << String.isEmpty << String.trim) model.chatMessage) then
+        let
+            encodedMessage =
+                encodeChatMessage model.username model.chatMessage |> Encode.encode 0
+        in
+            ( { model | chatMessage = "" }, WebSocket.send model.url encodedMessage )
+    else
+        model ! []
 
 
 decodeChatMessage : Decode.Decoder ChatMessage

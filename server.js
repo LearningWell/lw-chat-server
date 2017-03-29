@@ -11,10 +11,7 @@ app.get('/', function(req,res) {
   res.send('Yes, this is chat server?');
 });
 
-console.log(process.env.PORT);
-
 const server = app.listen(process.env.PORT, () => { console.log(`Listening on port ${process.env.PORT}`); });
-
 const wss = new WebSocketServer({
   server: server
 });

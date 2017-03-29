@@ -12,6 +12,7 @@ const credentials = { key: privateKey, cert: certificate };
 const app = express();
 const httpsServer = https.createServer(credentials, app);
 
+app.enable('trust proxy');
 app.get('/', function(req,res) {
   res.send('Yes, this is chat server?');
 });

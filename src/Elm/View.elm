@@ -67,11 +67,7 @@ chatMessagesArea areaId chatMessages =
 
 formatChatMessage : ChatMessage -> String
 formatChatMessage chatMessage =
-    let
-        time =
-            formatTime chatMessage.date
-    in
-        "[" ++ time ++ "] " ++ chatMessage.username ++ ": " ++ chatMessage.message
+    "[" ++ (formatTime chatMessage.date) ++ "] " ++ chatMessage.username ++ ": " ++ chatMessage.message
 
 
 chatMessageBar : Model -> Html Msg

@@ -14,7 +14,9 @@ update msg model =
         NewChatMessage message ->
             case Decode.decodeString decodeChatMessage message of
                 Ok decodedChatMessage ->
-                    ( { model | chatMessages = model.chatMessages ++ [ decodedChatMessage ] }, scrollToBottom model.messagesAreaId )
+                    ( { model | chatMessages = model.chatMessages ++ [ decodedChatMessage ] }
+                    , scrollToBottom model.messagesAreaId
+                    )
 
                 Err _ ->
                     model ! []
@@ -51,7 +53,17 @@ sendChatMessage model =
 
 decodeChatMessage : Decode.Decoder ChatMessage
 decodeChatMessage =
-    Decode.map3 ChatMessage (Decode.field "time" (Decode.float |> Decode.map fromTime)) (Decode.field "username" Decode.string) (Decode.field "message" Decode.string)
+    Decode.map3 ChatMessage decodeTime (decodeStringField "username") (decodeStringField "message")
+
+
+decodeTime : Decode.Decoder Date
+decodeTime =
+    Decode.field "time" (Decode.float |> Decode.map fromTime)
+
+
+decodeStringField : String -> Decode.Decoder String
+decodeStringField fieldName =
+    Decode.field fieldName Decode.string
 
 
 encodeChatMessage : String -> String -> Encode.Value

@@ -22,7 +22,8 @@ wss.on('connection', function connection(ws) {
 
     const jsonMsg = JSON.parse(message);
 
-    if (!jsonMsg.hasOwnProperty('username') || !jsonMsg.hasOwnProperty('message')) {
+    if (!jsonMsg.hasOwnProperty('username') || !jsonMsg.hasOwnProperty('message') ||
+        jsonMsg.username.trim() === '' || jsonMsg.message.trim() === '') {
       return;
     }
 

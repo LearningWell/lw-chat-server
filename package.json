@@ -4,7 +4,8 @@
   "description": "Minimal chat server to use in Elm programming session at LearningWell",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "heroku-postbuild": "webpack -p",
+    "start": "cd src && node server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,10 @@
   },
   "homepage": "https://github.com/bjorse/lw-chat-server#readme",
   "dependencies": {
+    "elm": "^0.18.0",
+    "elm-webpack-loader": "^4.3.0",
     "express": "^4.15.2",
+    "webpack": "^2.3.2",
     "ws": "^2.2.2"
   }
 }

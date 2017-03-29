@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const WebSocketServer = require('ws').Server;
@@ -7,14 +8,13 @@ const WebSocketServer = require('ws').Server;
 const app = express();
 
 app.enable('trust proxy');
-app.get('/', function(req,res) {
-  res.send('Yes, this is chat server?');
+app.use(express.static(path.join(__dirname, '../dist')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 const server = app.listen(process.env.PORT, () => { console.log(`Listening on port ${process.env.PORT}`); });
-const wss = new WebSocketServer({
-  server: server
-});
+const wss = new WebSocketServer({ server: server });
  
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
@@ -27,8 +27,8 @@ wss.on('connection', function connection(ws) {
     }
 
     const messageToSend = JSON.stringify({
-      username: jsonMsg.username,
-      message: jsonMsg.message,
+      username: jsonMsg.username.trim(),
+      message: jsonMsg.message.trim(),
       time: new Date().getTime()
     });
 

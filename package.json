@@ -1,0 +1,20 @@
+{
+  "name": "lw-chat-server",
+  "version": "1.0.0",
+  "description": "Minimal chat server to use in Elm programming session at LearningWell",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bjorse/lw-chat-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bjorse/lw-chat-server/issues"
+  },
+  "homepage": "https://github.com/bjorse/lw-chat-server#readme"
+}

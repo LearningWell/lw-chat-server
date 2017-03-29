@@ -19,9 +19,23 @@ const wss = new WebSocketServer({
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
+
+    const jsonMsg = JSON.parse(message);
+
+    if (!jsonMsg.hasOwnProperty('username') || !jsonMsg.hasOwnProperty('message')) {
+      return;
+    }
+
+    const messageToSend = JSON.stringify({
+      username: jsonMsg.username,
+      message: jsonMsg.message,
+      time: new Date().getTime()
+    });
+
+    wss.clients.forEach((client) => {
+      client.send(messageToSend);
+    });
   });
 
   console.log('Client connected!');
-  
-  ws.send('something');
 });

@@ -18,7 +18,7 @@ const wss = new WebSocketServer({ server: server });
  
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+    console.log('Received: %s', message);
 
     const jsonMsg = JSON.parse(message);
 

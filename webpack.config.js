@@ -5,12 +5,10 @@ const resolvePath = (pathToAdd) => {
   return path.resolve(__dirname, pathToAdd);
 }
 
-const outputPath = resolvePath('dist/');
-
 module.exports = {
   entry: resolvePath('src/index.js'),
   output: { 
-    path: outputPath,
+    path: resolvePath('dist/'),
     filename: 'app.js',
     publicPath: '/'
   },

@@ -1,8 +1,8 @@
 module View exposing (view)
 
-import Html exposing (Html, main_, div, span, input, button, textarea, text)
-import Html.Attributes exposing (id, class, type_, value, placeholder, disabled, rows)
-import Html.Events exposing (on, keyCode, onClick, onInput)
+import Html exposing (Html, main_, div, span, input, button, textarea, select, option, text)
+import Html.Attributes exposing (id, class, classList, style, type_, value, placeholder, selected, disabled, rows)
+import Html.Events exposing (on, keyCode, onClick, onInput, targetValue)
 import Json.Decode as Json
 import Date exposing (Date, hour, minute, second)
 import Types exposing (..)
@@ -24,6 +24,8 @@ topBar model =
             [ div [ class "navbar-header" ]
                 [ span [ class "navbar-brand" ] [ text "LearningWell Chat" ] ]
             , div [ class "navbar-form navbar-right" ]
+                [ colorSelect model.userColor model.colors ]
+            , div [ class "navbar-form navbar-right" ]
                 [ div [ class "input-group" ]
                     [ span [ class "input-group-addon" ] [ text "@" ]
                     , input
@@ -38,6 +40,30 @@ topBar model =
                 ]
             ]
         ]
+
+
+colorSelect : String -> List String -> Html Msg
+colorSelect selectedColor colors =
+    select
+        [ class "form-control"
+        , style (colorStyles selectedColor)
+        , on "change" <| Json.map SetUserColor targetValue
+        ]
+        (List.map (colorOption selectedColor) colors)
+
+
+colorOption : String -> String -> Html Msg
+colorOption selectedColor itemColor =
+    option
+        [ selected (selectedColor == itemColor)
+        , style (colorStyles itemColor)
+        ]
+        [ text itemColor ]
+
+
+colorStyles : String -> List ( String, String )
+colorStyles styleColor =
+    [ ( "background-color", styleColor ), ( "color", styleColor ) ]
 
 
 chatMessagesArea : String -> List ChatMessage -> Html Msg

@@ -13,7 +13,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const server = app.listen(process.env.PORT, () => { console.log(`Listening on port ${process.env.PORT}`); });
+const port = process.env.PORT;
+const server = app.listen(port, () => { console.log(`Listening on port ${port}`); });
 const wss = new WebSocketServer({ server: server });
  
 wss.on('connection', function connection(ws) {
@@ -27,9 +28,14 @@ wss.on('connection', function connection(ws) {
       return;
     }
 
+    const userColor = jsonMsg.hasOwnProperty('userColor') && jsonMsg.color.trim() !== '' 
+      ? jsonMsg.userColor 
+      : '#000000';
+
     const messageToSend = JSON.stringify({
       username: jsonMsg.username.trim(),
       message: jsonMsg.message.trim(),
+      userColor: userColor,
       time: new Date().getTime()
     });
 

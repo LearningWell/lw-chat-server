@@ -24,6 +24,9 @@ update msg model =
         SetUsername username ->
             { model | username = String.trim username } ! []
 
+        SetUserColor userColor ->
+            { model | userColor = userColor } ! []
+
         SetChatMessage chatMessage ->
             { model | chatMessage = chatMessage } ! []
 
@@ -44,7 +47,7 @@ sendChatMessage model =
     if ((not << String.isEmpty << String.trim) model.chatMessage) then
         let
             encodedMessage =
-                encodeChatMessage model.username model.chatMessage |> Encode.encode 0
+                encodeChatMessage model.username model.chatMessage model.userColor |> Encode.encode 0
         in
             ( { model | chatMessage = "" }, WebSocket.send model.url encodedMessage )
     else
@@ -53,7 +56,7 @@ sendChatMessage model =
 
 decodeChatMessage : Decode.Decoder ChatMessage
 decodeChatMessage =
-    Decode.map3 ChatMessage decodeTime (decodeStringField "username") (decodeStringField "message")
+    Decode.map4 ChatMessage decodeTime (decodeStringField "username") (decodeStringField "userColor") (decodeStringField "message")
 
 
 decodeTime : Decode.Decoder Date
@@ -66,9 +69,10 @@ decodeStringField fieldName =
     Decode.field fieldName Decode.string
 
 
-encodeChatMessage : String -> String -> Encode.Value
-encodeChatMessage username chatMessage =
+encodeChatMessage : String -> String -> String -> Encode.Value
+encodeChatMessage username chatMessage userColor =
     Encode.object
         [ ( "username", Encode.string username )
         , ( "message", Encode.string chatMessage )
+        , ( "userColor", Encode.string userColor )
         ]

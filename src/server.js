@@ -24,7 +24,6 @@ wss.on('connection', function connection(ws) {
   });
 
   console.log('Client connected!');
-  sendMessageAsServer('A client has connected. How exciting!');
 });
 
 const sendMessageAsServer = (message) => {

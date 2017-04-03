@@ -90,10 +90,6 @@ formatChatMessage chatMessage =
     ]
 
 
-
---"[" ++ (formatTime chatMessage.date) ++ "] " ++ chatMessage.username ++ ": " ++ chatMessage.message
-
-
 chatMessageBar : Model -> Html Msg
 chatMessageBar model =
     div [ class "row" ]

@@ -77,7 +77,8 @@ chatMessagesArea areaId chatMessages =
     in
         div [ class "row" ]
             [ div [ class "col-md-12" ]
-                [ div [ id areaId, class "messages" ] formattedMessages
+                [ div [ class "messages-outer" ]
+                    [ div [ id areaId, class "messages-inner" ] formattedMessages ]
                 ]
             ]
 

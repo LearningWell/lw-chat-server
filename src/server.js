@@ -28,7 +28,7 @@ wss.on('connection', function connection(ws) {
       return;
     }
 
-    const userColor = jsonMsg.hasOwnProperty('userColor') && jsonMsg.color.trim() !== '' 
+    const userColor = jsonMsg.hasOwnProperty('userColor') && jsonMsg.userColor.trim() !== '' 
       ? jsonMsg.userColor 
       : '#000000';
 

@@ -24,21 +24,27 @@ topBar model =
             [ div [ class "navbar-header" ]
                 [ span [ class "navbar-brand" ] [ text "LearningWell Chat" ] ]
             , div [ class "navbar-form navbar-right" ]
-                [ colorSelect model.userColor model.colors ]
-            , div [ class "navbar-form navbar-right" ]
-                [ div [ class "input-group" ]
-                    [ span [ class "input-group-addon" ] [ text "@" ]
-                    , input
-                        [ type_ "text"
-                        , class "form-control"
-                        , placeholder "Username"
-                        , onInput SetUsername
-                        , value model.username
-                        ]
-                        []
-                    ]
+                [ div [ class "col-md-8" ]
+                    [ usernameInput model.username ]
+                , div [ class "col-md-4" ]
+                    [ colorSelect model.userColor model.colors ]
                 ]
             ]
+        ]
+
+
+usernameInput : String -> Html Msg
+usernameInput username =
+    div [ class "input-group" ]
+        [ span [ class "input-group-addon" ] [ text "@" ]
+        , input
+            [ type_ "text"
+            , class "form-control"
+            , placeholder "Username"
+            , onInput SetUsername
+            , value username
+            ]
+            []
         ]
 
 

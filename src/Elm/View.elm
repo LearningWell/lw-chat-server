@@ -1,6 +1,6 @@
 module View exposing (view)
 
-import Html exposing (Html, main_, div, span, input, button, textarea, select, option, text)
+import Html exposing (Html, main_, div, span, strong, input, button, textarea, select, option, text)
 import Html.Attributes exposing (id, class, classList, style, type_, value, placeholder, selected, disabled, rows)
 import Html.Events exposing (on, keyCode, onClick, onInput, targetValue)
 import Json.Decode as Json
@@ -72,28 +72,26 @@ chatMessagesArea areaId chatMessages =
         formattedMessages =
             chatMessages
                 |> List.map formatChatMessage
-                |> List.intersperse "\x0D"
-                |> String.concat
+                |> List.intersperse ([ Html.br [] [] ])
+                |> List.concat
     in
         div [ class "row" ]
             [ div [ class "col-md-12" ]
-                [ div [ class "form-group" ]
-                    [ textarea
-                        [ id areaId
-                        , class "form-control"
-                        , disabled True
-                        , rows 20
-                        , value formattedMessages
-                        ]
-                        []
-                    ]
+                [ div [ id areaId, class "messages" ] formattedMessages
                 ]
             ]
 
 
-formatChatMessage : ChatMessage -> String
+formatChatMessage : ChatMessage -> List (Html a)
 formatChatMessage chatMessage =
-    "[" ++ (formatTime chatMessage.date) ++ "] " ++ chatMessage.username ++ ": " ++ chatMessage.message
+    [ text <| "[" ++ (formatTime chatMessage.date) ++ "] "
+    , strong [ style [ ( "color", chatMessage.userColor ) ] ] [ text <| chatMessage.username ++ ": " ]
+    , text chatMessage.message
+    ]
+
+
+
+--"[" ++ (formatTime chatMessage.date) ++ "] " ++ chatMessage.username ++ ": " ++ chatMessage.message
 
 
 chatMessageBar : Model -> Html Msg

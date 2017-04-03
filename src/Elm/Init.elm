@@ -19,7 +19,7 @@ init =
 
 getUserColors : List String
 getUserColors =
-    [ "#000000", "#ff0000", "#0040ff", "#ffff00", "#ff8000", "#ffbf00", "#808080", "#009933", "#00e64d", "#00ff55" ]
+    [ "#000000", "#ff0000", "#0040ff", "#e6e600", "#ff8000", "#ffbf00", "#808080", "#009933", "#00e64d", "#00ff55" ]
 
 
 subscriptions : Model -> Sub Msg

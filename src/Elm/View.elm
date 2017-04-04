@@ -1,7 +1,7 @@
 module View exposing (view)
 
 import Html exposing (Html, main_, div, span, strong, input, button, br, select, option, text)
-import Html.Attributes exposing (id, class, classList, style, type_, value, placeholder, selected, disabled, rows)
+import Html.Attributes exposing (id, class, style, type_, value, placeholder, selected, disabled)
 import Html.Events exposing (onClick, onInput)
 import Types exposing (..)
 import Utils exposing (notEmpty, formatTime, onKeyDown, onChange)

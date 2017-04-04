@@ -1,11 +1,10 @@
 module View exposing (view)
 
-import Html exposing (Html, main_, div, span, strong, input, button, textarea, select, option, text)
+import Html exposing (Html, main_, div, span, strong, input, button, br, select, option, text)
 import Html.Attributes exposing (id, class, classList, style, type_, value, placeholder, selected, disabled, rows)
-import Html.Events exposing (on, keyCode, onClick, onInput, targetValue)
-import Json.Decode as Json
-import Date exposing (Date, hour, minute, second)
+import Html.Events exposing (onClick, onInput)
 import Types exposing (..)
+import Utils exposing (notEmpty, formatTime, onKeyDown, onChange)
 
 
 view : Model -> Html Msg
@@ -53,7 +52,7 @@ colorSelect selectedColor colors =
     select
         [ class "form-control"
         , style (colorStyles selectedColor)
-        , on "change" <| Json.map SetUserColor targetValue
+        , onChange SetUserColor
         ]
         (List.map (colorOption selectedColor) colors)
 
@@ -79,7 +78,7 @@ chatMessagesArea areaId chatMessages =
         formattedMessages =
             chatMessages
                 |> List.map formatChatMessage
-                |> List.intersperse ([ Html.br [] [] ])
+                |> List.intersperse [ br [] [] ]
                 |> List.concat
     in
         div [ class "row" ]
@@ -128,28 +127,9 @@ chatMessageBar model =
 
 canChangeChatMessage : Model -> Bool
 canChangeChatMessage model =
-    (not << String.isEmpty) model.username
+    notEmpty model.username
 
 
 canSendChatMessage : Model -> Bool
 canSendChatMessage model =
-    canChangeChatMessage model && (not << String.isEmpty) model.chatMessage
-
-
-onKeyDown : (Int -> msg) -> Html.Attribute msg
-onKeyDown msg =
-    on "keydown" (Json.map msg keyCode)
-
-
-padNumber : number -> String
-padNumber dateNumber =
-    ((String.padLeft 2 '0') << toString) dateNumber
-
-
-formatTime : Date -> String
-formatTime date =
-    (padNumber << hour) date
-        ++ ":"
-        ++ (padNumber << minute) date
-        ++ ":"
-        ++ (padNumber << second) date
+    canChangeChatMessage model && notEmpty model.chatMessage

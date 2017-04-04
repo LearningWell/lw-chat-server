@@ -6,6 +6,7 @@ import Json.Encode as Encode
 import WebSocket
 import Types exposing (..)
 import Ports exposing (scrollToBottom)
+import Utils exposing (notEmpty)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -44,7 +45,7 @@ update msg model =
 
 sendChatMessage : Model -> ( Model, Cmd Msg )
 sendChatMessage model =
-    if ((not << String.isEmpty << String.trim) model.chatMessage) then
+    if (notEmpty model.chatMessage) then
         let
             encodedMessage =
                 encodeChatMessage model.username model.chatMessage model.userColor |> Encode.encode 0

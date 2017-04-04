@@ -62,6 +62,7 @@ colorOption : String -> String -> Html Msg
 colorOption selectedColor itemColor =
     option
         [ selected (selectedColor == itemColor)
+        , class "color-option"
         , style (colorStyles itemColor)
         ]
         [ text itemColor ]

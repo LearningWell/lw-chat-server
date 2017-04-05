@@ -14,7 +14,11 @@ app.get('/', (req, res) => {
 });
 
 const port = process.env.PORT;
-const server = app.listen(port, () => { console.log(`Listening on port ${port}`); });
+const server = app.listen(port, () => { 
+  console.log(`Listening on port ${port}`);
+
+  setInterval(() => { sendMessageAsServer("Hello? Anybody out there?")}, 30000); 
+});
 const wss = new WebSocketServer({ server: server });
  
 wss.on('connection', function connection(ws) {
